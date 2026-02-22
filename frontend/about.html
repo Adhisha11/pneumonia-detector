@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pneumonia Detection AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1193d4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101c22",
+                        "text-light": "#111618",
+                        "text-dark": "#f6f7f8"
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-light dark:text-text-dark">
+<div class="flex flex-col min-h-screen">
+<header class="w-full">
+<div class="container mx-auto px-4">
+<div class="flex items-center justify-between py-4 border-b border-primary/20">
+<div class="flex items-center gap-3">
+<svg class="h-8 w-8 text-primary" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM11 17V15H13V17H11ZM11 7V13H13V7H11Z" fill-rule="evenodd"></path>
+</svg>
+<h2 class="text-xl font-bold tracking-tight">Pneumonia Detection AI</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+</nav>
+<a class="hidden md:inline-flex items-center justify-center px-4 py-2 text-sm font-bold text-white bg-primary rounded-lg hover:bg-opacity-90 transition-colors" href="index.html">
+                        Get Started
+                    </a>
+<button class="md:hidden text-text-light dark:text-text-dark">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16M4 12h16m-7 6h7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-grow">
+<section class="py-16 md:py-24">
+<div class="container mx-auto px-4">
+<div class="grid md:grid-cols-2 gap-12 items-center">
+<div class="flex flex-col gap-6 text-center md:text-left">
+<h1 class="text-4xl md:text-5xl font-black leading-tight tracking-tighter">AI-Powered Pneumonia Detection</h1>
+<p class="text-base md:text-lg text-text-light/80 dark:text-text-dark/80">
+                                Our application uses advanced deep learning techniques to analyze chest X-ray images and accurately detect and classify pneumonia, providing healthcare professionals with real-time diagnostic support.
+                            </p>
+<div class="mt-4 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+<a class="inline-flex items-center justify-center px-6 py-3 text-base font-bold text-white bg-primary rounded-lg hover:bg-opacity-90 transition-colors shadow-lg" href="index.html">
+                                    Start Diagnostic
+                                </a>
+</div>
+</div>
+<div class="w-full aspect-square rounded-xl shadow-2xl bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCdYcCvL6Hnr7bkYmyVH8Y0LjUw3BecWN8fP2sdNj0dl5oEp7jcr5AIF_61u6YlO6PhhTYkeHTKb4ZUneI97-aGix-TzSmmVHY-yfQXBcnbZRR10KyNJOD5NugJpWcrSy6hiMJ-dM_vIJTYnLgznkyBNkqkBY86szmTmeaVYqh4Shp4-mqMKxpmrNJMgsOJwyiDikxIAtW7DPqeU8D33MELejl6P-cUNccTWJuySx97OqsbSCIYYNnuromP6THKni_3z644gzyAXQ");'>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="w-full py-6 border-t border-primary/20">
+<div class="container mx-auto px-4 text-center text-sm text-text-light/60 dark:text-text-dark/60">
+<p>© 2024 Pneumonia Detection AI. All rights reserved.</p>
+</div>
+</footer>
+</div>
+
+</body></html>

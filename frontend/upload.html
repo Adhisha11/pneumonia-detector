@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pneumonia Detector - Upload</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#1193d4",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101c22",
+            "content-light": "#1f2937",
+            "content-dark": "#e5e7eb",
+            "subtle-light": "#6b7280",
+            "subtle-dark": "#9ca3af",
+            "border-light": "#e5e7eb",
+            "border-dark": "#374151",
+          },
+          fontFamily: { display: ["Inter", "sans-serif"] },
+        }
+      }
+    };
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .upload-box {
+      transition: box-shadow 0.3s, border-color 0.3s;
+    }
+    .upload-box.dragover {
+      border-color: #1193d4;
+      box-shadow: 0 0 0 4px #1193d441;
+    }
+  </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-content-light dark:text-content-dark min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="border-b border-border-light dark:border-border-dark flex-shrink-0">
+    <div class="container mx-auto px-6 h-16 flex items-center">
+      <div class="flex items-center gap-4">
+        <svg class="h-8 w-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM12.5 12.01v-4.01h-1v4.01h-2.25l2.75 2.75 2.75-2.75h-2.25z"/>
+        </svg>
+        <h1 class="text-xl font-bold">Pneumonia Detector</h1>
+      </div>
+    </div>
+  </header>
+  <!-- Main content -->
+  <main class="flex-1 flex items-center justify-center">
+    <section class="w-full max-w-xl mx-auto text-center space-y-8">
+      <h2 class="text-3xl font-extrabold text-primary">Upload Chest X-ray Image</h2>
+      <p class="text-subtle-light dark:text-subtle-dark">
+        Get real-time diagnostics with our deep learning model.
+      </p>
+      <!-- Upload box -->
+      <div id="upload-box" class="upload-box relative border-2 border-dashed border-border-light dark:border-border-dark rounded-xl p-10 hover:border-primary transition-colors cursor-pointer bg-white dark:bg-background-dark flex flex-col items-center justify-center shadow-xl">
+        <input id="file-upload" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" type="file" accept="image/jpeg, image/png"/>
+        <span class="material-symbols-outlined text-6xl text-primary">cloud_upload</span>
+        <p class="text-base text-subtle-light dark:text-subtle-dark mt-4">Click or drag & drop your X-ray image (JPG, PNG)</p>
+        <span id="file-name" class="mt-2 text-primary font-semibold hidden"></span>
+      </div>
+      <!-- Analyze button -->
+      <button id="analyze-btn"
+        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-base font-bold text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all"
+        type="button">
+        Analyze
+      </button>
+    </section>
+  </main>
+  <!-- Footer -->
+  <footer class="border-t border-border-light dark:border-border-dark text-center py-4 text-sm text-subtle-light dark:text-subtle-dark flex-shrink-0">
+    <div class="container mx-auto px-6">
+      © 2024 Pneumonia Detector. All rights reserved.
+    </div>
+  </footer>
+  <!-- Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const analyzeBtn = document.getElementById("analyze-btn");
+      const fileInput = document.getElementById("file-upload");
+      const uploadBox = document.getElementById("upload-box");
+      const fileName = document.getElementById("file-name");
+
+      // Drag & drop highlight
+      uploadBox.addEventListener("dragover", e => {
+        e.preventDefault();
+        uploadBox.classList.add("dragover");
+      });
+      uploadBox.addEventListener("dragleave", e => {
+        uploadBox.classList.remove("dragover");
+      });
+      uploadBox.addEventListener("drop", e => {
+        e.preventDefault();
+        uploadBox.classList.remove("dragover");
+        if (e.dataTransfer.files && e.dataTransfer.files.length) {
+          fileInput.files = e.dataTransfer.files;
+          showFileName(e.dataTransfer.files[0]);
+        }
+      });
+      fileInput.addEventListener("change", e => {
+        showFileName(fileInput.files[0]);
+      });
+
+      function showFileName(file) {
+        if (file) {
+          fileName.textContent = "Selected: " + file.name;
+          fileName.classList.remove("hidden");
+        } else {
+          fileName.textContent = "";
+          fileName.classList.add("hidden");
+        }
+      }
+
+      analyzeBtn.addEventListener("click", async () => {
+        const file = fileInput.files[0];
+        if (!file) {
+          alert("⚠️ Please upload a chest X-ray image first!");
+          return;
+        }
+        analyzeBtn.textContent = "Analyzing...";
+        analyzeBtn.disabled = true;
+
+        const formData = new FormData();
+        formData.append("file", file);
+
+        try {
+          const response = await fetch("http://127.0.0.1:5000/predict", {
+            method: "POST",
+            body: formData,
+          });
+          if (!response.ok) throw new Error("Server returned an error");
+          const result = await response.json();
+          localStorage.setItem("diagnosis", JSON.stringify(result));
+          window.location.href = "dashboard.html";
+        } catch (error) {
+          alert("Something went wrong while analyzing. Check backend connection.");
+        } finally {
+          analyzeBtn.textContent = "Analyze";
+          analyzeBtn.disabled = false;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

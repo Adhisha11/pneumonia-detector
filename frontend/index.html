@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pneumonia Detection AI - Login</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        primary: "#1193d4",
+        "background-light": "#f6f7f8",
+        "background-dark": "#101c22",
+      },
+      fontFamily: {
+        display: ["Inter", "sans-serif"],
+      },
+      borderRadius: {
+        xl: "0.75rem",
+      },
+    },
+  },
+};
+</script>
+</head>
+
+<body class="bg-background-light font-display text-gray-900 flex items-center justify-center min-h-screen">
+
+<div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8">
+  <div class="text-center mb-6">
+    <div class="flex justify-center mb-3">
+      <svg class="h-10 w-10 text-primary" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2C6.48 2 2 6.48 2 12C2 
+          17.52 6.48 22 12 22C17.52 22 
+          22 17.52 22 12C22 6.48 17.52 
+          2 12 2ZM11 17V15H13V17H11ZM11 
+          7V13H13V7H11Z"/>
+      </svg>
+    </div>
+    <h1 class="text-2xl font-bold text-primary">Pneumonia Detection AI</h1>
+    <p class="text-sm text-gray-500 mt-1">Secure Portal Access</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="flex justify-center mb-6 border-b border-gray-200">
+    <button id="loginTab" class="px-6 py-2 font-semibold border-b-2 border-primary text-primary">
+      Login
+    </button>
+    <button id="registerTab" class="px-6 py-2 font-semibold text-gray-500 border-b-2 border-transparent hover:text-primary">
+      Register
+    </button>
+  </div>
+
+  <!-- Login Form -->
+  <form id="loginForm" class="space-y-4">
+    <div>
+      <label class="text-sm font-medium">Email</label>
+      <input id="loginEmail" type="email" placeholder="you@healthcare.com"
+        class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" required>
+    </div>
+    <div>
+      <label class="text-sm font-medium">Password</label>
+      <input id="loginPassword" type="password" placeholder="••••••••"
+        class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" required>
+    </div>
+    <button type="submit"
+      class="w-full py-3 font-bold text-white bg-primary rounded-lg hover:bg-opacity-90 transition">
+      Login
+    </button>
+  </form>
+
+  <!-- Register Form -->
+  <form id="registerForm" class="space-y-4 hidden">
+    <div>
+      <label class="text-sm font-medium">Full Name</label>
+      <input id="regName" type="text" placeholder="Dr. John Smith"
+        class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" required>
+    </div>
+    <div>
+      <label class="text-sm font-medium">Email</label>
+      <input id="regEmail" type="email" placeholder="you@healthcare.com"
+        class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" required>
+    </div>
+    <div>
+      <label class="text-sm font-medium">Password</label>
+      <input id="regPassword" type="password" placeholder="••••••••"
+        class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" required>
+    </div>
+    <div>
+      <label class="text-sm font-medium">Confirm Password</label>
+      <input id="regConfirm" type="password" placeholder="••••••••"
+        class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary" required>
+    </div>
+    <button type="submit"
+      class="w-full py-3 font-bold text-white bg-primary rounded-lg hover:bg-opacity-90 transition">
+      Create Account
+    </button>
+  </form>
+
+  <p class="text-center text-xs text-gray-500 mt-6">
+    © 2024 Pneumonia Detection AI. All rights reserved.
+  </p>
+</div>
+
+<script>
+const loginTab = document.getElementById("loginTab");
+const registerTab = document.getElementById("registerTab");
+const loginForm = document.getElementById("loginForm");
+const registerForm = document.getElementById("registerForm");
+
+// Switch tabs
+loginTab.addEventListener("click", () => {
+  loginForm.classList.remove("hidden");
+  registerForm.classList.add("hidden");
+  loginTab.classList.add("text-primary", "border-primary");
+  registerTab.classList.remove("text-primary", "border-primary");
+  registerTab.classList.add("text-gray-500");
+});
+
+registerTab.addEventListener("click", () => {
+  registerForm.classList.remove("hidden");
+  loginForm.classList.add("hidden");
+  registerTab.classList.add("text-primary", "border-primary");
+  loginTab.classList.remove("text-primary", "border-primary");
+  loginTab.classList.add("text-gray-500");
+});
+
+// Store users in localStorage for demo
+document.getElementById("registerForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const name = document.getElementById("regName").value;
+  const email = document.getElementById("regEmail").value;
+  const pass = document.getElementById("regPassword").value;
+  const confirm = document.getElementById("regConfirm").value;
+
+  if (pass !== confirm) {
+    alert("Passwords do not match!");
+    return;
+  }
+
+  localStorage.setItem(email, JSON.stringify({ name, email, pass }));
+  alert("Account created successfully! You can now login.");
+  registerForm.reset();
+  loginTab.click(); // switch to login
+});
+
+// Login validation
+document.getElementById("loginForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const email = document.getElementById("loginEmail").value;
+  const pass = document.getElementById("loginPassword").value;
+
+  const userData = JSON.parse(localStorage.getItem(email));
+  if (userData && userData.pass === pass) {
+    alert("Login successful!");
+    window.location.href = "upload.html"; // Redirect to upload page
+  } else {
+    alert("Invalid email or password.");
+  }
+});
+</script>
+
+</body>
+</html>
+
